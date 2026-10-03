@@ -1,9 +1,9 @@
-# RTL-SDR pour Home Assistant
+﻿# RTL-SDR pour Home Assistant
 
 > 📡 **Intégration complète pour clé RTL-SDR** avec interface **SDR++** responsive (mobile & PC).
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
-[![GitHub release](https://img.shields.io/github/v/release/your-user/rtl-dsr)](https://github.com/your-user/rtl-dsr/releases)
+[![GitHub release](https://img.shields.io/github/v/release/Poisson48/rtl-dsr)](https://github.com/Poisson48/rtl-dsr/releases)
 
 ---
 
@@ -28,7 +28,7 @@
 3. Clique sur le menu **⋮** (en haut à droite) → **Repositories personnalisés**
 4. Dans **Repository**, colle :
    ```
-   https://github.com/your-user/rtl-dsr
+   https://github.com/Poisson48/rtl-dsr
    ```
 5. Dans **Catégorie**, choisis **Integration**
 6. Clique sur **Ajouter**
@@ -252,4 +252,5 @@ MIT © your-name
 
 ## 🤝 Contribuer
 
-Les contributions sont les bienvenues ! Ouvre une issue ou une pull request sur [GitHub](https://github.com/your-user/rtl-dsr).
+Les contributions sont les bienvenues ! Ouvre une issue ou une pull request sur [GitHub](https://github.com/Poisson48/rtl-dsr).
+

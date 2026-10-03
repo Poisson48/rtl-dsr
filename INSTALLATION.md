@@ -1,4 +1,4 @@
-# RTL-SDR pour Home Assistant — Guide de déploiement rapide
+﻿# RTL-SDR pour Home Assistant — Guide de déploiement rapide
 
 > 🎯 **Objectif** : que ça marche parfaitement sur ton HA (mobile + PC) avec détection automatique du dongle RTL-SDR.
 
@@ -9,7 +9,7 @@
 Ouvre **Terminal & SSH** sur ton HA et colle :
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/<ton-user>/rtl-dsr/main/deploy.sh | bash
+curl -fsSL https://raw.githubusercontent.com/<Poisson48>/rtl-dsr/main/deploy.sh | bash
 ```
 
 **C'est tout !** Le script :
@@ -138,3 +138,4 @@ Une fois installé, tu as :
 - 🌍 **Interface FR/EN**
 
 **Amuse-toi bien avec ton SDR !** 🚀
+

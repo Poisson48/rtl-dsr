@@ -1,4 +1,4 @@
-# 📦 Installation via HACS — Guide pas-à-pas
+﻿# 📦 Installation via HACS — Guide pas-à-pas
 
 Ce plugin est **installable via HACS** (Home Assistant Community Store), le gestionnaire de plugins intégré à Home Assistant.
 
@@ -44,7 +44,7 @@ cd D:\git\rtl-dsr
 git init
 git add .
 git commit -m "Initial release - RTL-SDR v0.2.0"
-git remote add origin https://github.com/TON-UTILISATEUR/rtl-dsr.git
+git remote add origin https://github.com/Poisson48/rtl-dsr.git
 git push -u origin main
 ```
 
@@ -75,7 +75,7 @@ git push -u origin main
 3. Clique sur le menu **⋮** (en haut à droite) → **Repositories personnalisés**
 4. Dans **Repository**, colle :
    ```
-   https://github.com/TON-UTILISATEUR/rtl-dsr
+   https://github.com/Poisson48/rtl-dsr
    ```
 5. Dans **Catégorie**, choisis **Integration**
 6. Clique sur **Ajouter**
@@ -195,3 +195,4 @@ Si ça ne marche toujours pas après toutes les étapes :
 1. Va dans **Paramètres → Système → Logs**
 2. Copie les erreurs contenant `rtl_dsr`
 3. Envoie-les avec ton setup (HA OS ? Docker ? version ?)
+

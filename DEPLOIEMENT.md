@@ -1,4 +1,4 @@
-# 🚀 Déploiement RTL-SDR + carte SDR++ — commandes à copier-coller
+﻿# 🚀 Déploiement RTL-SDR + carte SDR++ — commandes à copier-coller
 
 > **Où exécuter ?** Dans ton Home Assistant : **Paramètres → Modules complémentaires → Terminal & SSH → Ouvrir le Web UI**
 >
@@ -62,9 +62,9 @@ mkdir -p www/rtl_dsr
 
 echo "=== Téléchargement depuis GitHub ==="
 if command -v curl >/dev/null 2>&1; then
-  curl -fsSL -o /tmp/rtl-dsr-deploy.zip https://github.com/<ton-user>/rtl-dsr/releases/latest/download/rtl-dsr-deploy.zip
+  curl -fsSL -o /tmp/rtl-dsr-deploy.zip https://github.com/<Poisson48>/rtl-dsr/releases/latest/download/rtl-dsr-deploy.zip
 elif command -v wget >/dev/null 2>&1; then
-  wget -q -O /tmp/rtl-dsr-deploy.zip https://github.com/<ton-user>/rtl-dsr/releases/latest/download/rtl-dsr-deploy.zip
+  wget -q -O /tmp/rtl-dsr-deploy.zip https://github.com/<Poisson48>/rtl-dsr/releases/latest/download/rtl-dsr-deploy.zip
 else
   echo "❌ Ni curl ni wget n'est installé. Utilise la méthode manuelle ci-dessous."
   exit 1
@@ -80,7 +80,7 @@ echo ""
 echo "✅ Installation terminée !"
 ```
 
-> ⚠️ Remplace `<ton-user>` par ton pseudo GitHub une fois le repo créé.
+> ⚠️ Remplace `<Poisson48>` par ton pseudo GitHub une fois le repo créé.
 
 ---
 
@@ -152,3 +152,4 @@ echo "➡️  Ajoute maintenant la carte SDR++ à ton dashboard (section 5)."
 | `ImportError: rtlsdr` | `pip install pyrtlsdr` dans le Terminal SSH, ou `apk add librtlsdr` |
 | Carte SDR++ affiche `● déconnexion` | Redémarre HA après installation de l'intégration |
 | Ressource Lovelace 404 | Vérifie que `card.js` est bien dans `/config/www/rtl_dsr/` |
+

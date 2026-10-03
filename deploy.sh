@@ -1,6 +1,6 @@
 ﻿#!/bin/bash
 # RTL-SDR + SDR++ Card - Script de déploiement automatique
-# Usage: curl -fsSL https://raw.githubusercontent.com/<ton-user>/rtl-dsr/main/deploy.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/<Poisson48>/rtl-dsr/main/deploy.sh | bash
 
 set -e
 
@@ -42,7 +42,7 @@ FILES=(
   "panel/sdrplusplus/sdr-plus-plus-card.js"
 )
 
-BASE_URL="https://raw.githubusercontent.com/<ton-user>/rtl-dsr/main"
+BASE_URL="https://raw.githubusercontent.com/<Poisson48>/rtl-dsr/main"
 
 for file in "${FILES[@]}"; do
   echo "  ↓ $file"
@@ -79,3 +79,4 @@ echo "Prochaines étapes :"
 echo "  1. Va dans Paramètres → Appareils et services → Ajouter → RTL-SDR"
 echo "  2. Ajoute la ressource Lovelace : /local/rtl_dsr/card.js (module)"
 echo "  3. Ajoute une carte : type: custom:sdr-plus-plus-card"
+

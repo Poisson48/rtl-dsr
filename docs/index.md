@@ -1,4 +1,4 @@
----
+﻿---
 title: RTL-SDR
 description: Pilote une clé RTL-SDR branchée en USB et expose signaux et réglages en entités Home Assistant.
 ha_category:
@@ -12,7 +12,7 @@ ha_release: 2024.1
 ha_iot_class: Local Polling
 ha_config_flow: true
 ha_codeowners:
-  - '@your-github-username'
+  - '@Poisson48'
 ha_domain: rtl_dsr
 ha_integration_type: device
 ha_platforms:
@@ -89,3 +89,4 @@ Régle le seuil de détection de signal en dB.
 ### `rtl_dsr.reset`
 
 Restaure les réglages par défaut et coupe la réception.
+

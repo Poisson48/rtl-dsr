@@ -1,12 +1,12 @@
 {
   "domain": "rtl_dsr",
   "name": "RTL-SDR",
-  "codeowners": ["@your-github-username"],
+  "codeowners": ["@Poisson48"],
   "config_flow": true,
-  "documentation": "https://github.com/your-github-username/rtl-dsr",
+  "documentation": "https://github.com/Poisson48/rtl-dsr",
   "integration_type": "device",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/your-github-username/rtl-dsr/issues",
+  "issue_tracker": "https://github.com/Poisson48/rtl-dsr/issues",
   "requirements": ["pyrtlsdr>=0.3.0"],
-  "version": "0.2.0"
+  "version": "1.0.1"
 }
