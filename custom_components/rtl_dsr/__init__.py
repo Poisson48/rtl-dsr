@@ -10,6 +10,7 @@ from .const import DOMAIN, LOGGER, PLATFORMS
 from .coordinator import RtlDsrCoordinator
 from .services import async_setup_services, async_unload_services
 from .websocket_api import async_setup_fft_service, async_unload_fft_service
+from .panel import async_register_panel
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -27,6 +28,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     await async_setup_services(hass)
     await async_setup_fft_service(hass)
+    await async_register_panel(hass)
 
     entry.async_on_unload(entry.add_update_listener(_async_update_listener))
     return True
