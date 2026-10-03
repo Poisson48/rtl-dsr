@@ -19,7 +19,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator = RtlDsrCoordinator(hass, entry)
     try:
         await coordinator.async_config_entry_first_refresh()
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         LOGGER.error("RTL-SDR initialisation failed: %s", exc)
         return False
 
