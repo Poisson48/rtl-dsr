@@ -38,12 +38,11 @@ from .const import (
 from .coordinator import RtlDsrCoordinator
 from .model import SdrError
 
-SERVICE_TARGET_SCHEMA = vol.Schema(
-    {
-        vol.Optional("device_id"): cv.string,
-        vol.Optional("entry_id"): cv.string,
-    }
-)
+# Base schema for targeting a specific device (as a dict, not vol.Schema)
+SERVICE_TARGET_FIELDS = {
+    vol.Optional("device_id"): cv.string,
+    vol.Optional("entry_id"): cv.string,
+}
 
 
 def _find_coordinators(
@@ -130,38 +129,59 @@ async def async_setup_services(hass: HomeAssistant) -> None:
             await hass.async_add_executor_job(c.reset)
 
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_FREQUENCY, _handle_set_frequency,
-        schema=vol.Schema({vol.Required(ATTR_FREQUENCY): vol.Coerce(float), **SERVICE_TARGET_SCHEMA}),
+        DOMAIN,
+        SERVICE_SET_FREQUENCY,
+        _handle_set_frequency,
+        schema=vol.Schema({vol.Required(ATTR_FREQUENCY): vol.Coerce(float), **SERVICE_TARGET_FIELDS}),
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_SAMPLE_RATE, _handle_set_sample_rate,
-        schema=vol.Schema({vol.Required(ATTR_SAMPLE_RATE): vol.Coerce(float), **SERVICE_TARGET_SCHEMA}),
+        DOMAIN,
+        SERVICE_SET_SAMPLE_RATE,
+        _handle_set_sample_rate,
+        schema=vol.Schema({vol.Required(ATTR_SAMPLE_RATE): vol.Coerce(float), **SERVICE_TARGET_FIELDS}),
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_GAIN, _handle_set_gain,
-        schema=vol.Schema({vol.Required(ATTR_GAIN): cv.string, **SERVICE_TARGET_SCHEMA}),
+        DOMAIN,
+        SERVICE_SET_GAIN,
+        _handle_set_gain,
+        schema=vol.Schema({vol.Required(ATTR_GAIN): cv.string, **SERVICE_TARGET_FIELDS}),
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_PPM, _handle_set_ppm,
-        schema=vol.Schema({vol.Required(ATTR_PPM): vol.Coerce(int), **SERVICE_TARGET_SCHEMA}),
+        DOMAIN,
+        SERVICE_SET_PPM,
+        _handle_set_ppm,
+        schema=vol.Schema({vol.Required(ATTR_PPM): vol.Coerce(int), **SERVICE_TARGET_FIELDS}),
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_MODE, _handle_set_mode,
-        schema=vol.Schema({vol.Required(ATTR_MODE): vol.In(MODES), **SERVICE_TARGET_SCHEMA}),
+        DOMAIN,
+        SERVICE_SET_MODE,
+        _handle_set_mode,
+        schema=vol.Schema({vol.Required(ATTR_MODE): vol.In(MODES), **SERVICE_TARGET_FIELDS}),
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_PREAMP, _handle_set_preamp,
-        schema=vol.Schema({vol.Required(ATTR_PREAMP): cv.boolean, **SERVICE_TARGET_SCHEMA}),
+        DOMAIN,
+        SERVICE_SET_PREAMP,
+        _handle_set_preamp,
+        schema=vol.Schema({vol.Required(ATTR_PREAMP): cv.boolean, **SERVICE_TARGET_FIELDS}),
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_BANDWIDTH, _handle_set_bandwidth,
-        schema=vol.Schema({vol.Required(ATTR_BANDWIDTH): vol.Coerce(float), **SERVICE_TARGET_SCHEMA}),
+        DOMAIN,
+        SERVICE_SET_BANDWIDTH,
+        _handle_set_bandwidth,
+        schema=vol.Schema({vol.Required(ATTR_BANDWIDTH): vol.Coerce(float), **SERVICE_TARGET_FIELDS}),
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_SQUELCH, _handle_set_squelch,
-        schema=vol.Schema({vol.Required("level"): vol.Coerce(float), **SERVICE_TARGET_SCHEMA}),
+        DOMAIN,
+        SERVICE_SET_SQUELCH,
+        _handle_set_squelch,
+        schema=vol.Schema({vol.Required("level"): vol.Coerce(float), **SERVICE_TARGET_FIELDS}),
     )
-    hass.services.async_register(DOMAIN, SERVICE_RESET, _handle_reset, schema=SERVICE_TARGET_SCHEMA)
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_RESET,
+        _handle_reset,
+        schema=vol.Schema(SERVICE_TARGET_FIELDS),
+    )
 
 
 async def async_unload_services(hass: HomeAssistant) -> None:
