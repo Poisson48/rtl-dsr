@@ -1,4 +1,4 @@
-﻿name: Build & Release RTL-SDR
+name: Build & Release RTL-SDR
 
 on:
   push:
@@ -11,52 +11,46 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Validate Python syntax
         run: |
           python -m py_compile custom_components/rtl_dsr/*.py
           echo "✅ Python syntax OK"
-      
+
       - name: Validate JSON
         run: |
           for f in custom_components/rtl_dsr/*.json custom_components/rtl_dsr/translations/*.json hacs.json; do
             python -m json.tool "$f" > /dev/null
             echo "✅ $f"
           done
-      
+
       - name: Validate YAML
         run: |
           python -c "import yaml; yaml.safe_load(open('custom_components/rtl_dsr/services.yaml'))"
           echo "✅ services.yaml"
-      
+
       - name: Validate JavaScript
         run: |
           node --check panel/sdrplusplus/sdr-plus-plus-card.js
           node --check panel/sdrplusplus/card.js
           echo "✅ JavaScript syntax OK"
-      
-      - name: Build deployment zip
+
+      - name: Build HACS release zip
         run: |
           cd ${{ github.workspace }}
-          zip -r rtl-dsr-deploy.zip custom_components/rtl_dsr panel/sdrplusplus/card.js panel/sdrplusplus/sdr-plus-plus-card.js deploy.sh
-          echo "✅ rtl-dsr-deploy.zip créé"
-      
-      - name: Build complete package
-        run: |
-          cd ${{ github.workspace }}
-          zip -r rtl-dsr-full.zip . -x '.git/*' -x '.github/*'
-          echo "✅ rtl-dsr-full.zip créé"
-      
+          # HACS expects custom_components/ at the root of the zip
+          zip -r rtl-dsr.zip custom_components/rtl_dsr
+          echo "✅ rtl-dsr.zip created for HACS"
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            rtl-dsr-deploy.zip
-            rtl-dsr-full.zip
+            rtl-dsr.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
