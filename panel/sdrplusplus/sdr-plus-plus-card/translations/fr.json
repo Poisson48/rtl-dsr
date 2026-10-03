@@ -1,0 +1,8 @@
+{
+  "cards": {
+    "sdr_plus_plus_card": {
+      "name": "Carte SDR++",
+      "description": "Spectre, waterfall et tuning pour une clé RTL-SDR. Compatible mobile et desktop."
+    }
+  }
+}

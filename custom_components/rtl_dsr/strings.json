@@ -1,0 +1,98 @@
+{
+  "services": {
+    "get_fft": {
+      "name": "Get FFT",
+      "description": "Return one FFT measurement snapshot (dB bins, peak, noise floor, RSSI, current tuning)."
+    },
+    "set_frequency": { "name": "Set frequency", "description": "Center frequency in MHz (24–1766)." },
+    "set_sample_rate": { "name": "Set sample rate", "description": "IQ sample rate in MHz (0.25–3.2)." },
+    "set_gain": { "name": "Set gain", "description": "Tuner gain, 'auto' or a dB value." },
+    "set_ppm": { "name": "Set frequency correction", "description": "Crystal correction in ppm." },
+    "set_mode": { "name": "Set mode", "description": "Demodulation mode: off, spectrum, nfm, wfm, am, usb, lsb, raw." },
+    "set_preamp": { "name": "Set preamp", "description": "Enable or disable the RF preamp." },
+    "set_bandwidth": { "name": "Set bandwidth", "description": "IF bandwidth in MHz (0 = auto)." },
+    "set_squelch": { "name": "Set squelch", "description": "Signal-detect threshold in dB." },
+    "reset": { "name": "Reset", "description": "Restore defaults and turn reception off." }
+  },
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure the RTL-SDR dongle",
+        "description": "Select which USB device index to use (0 for the first dongle). The integration will probe the tuner and continue.",
+        "data": {
+          "device_index": "Device index"
+        },
+        "data_description": {
+          "device_index": "0 for the first RTL-SDR dongle, 1 for the second, etc."
+        }
+      },
+      "options": {
+        "title": "Initial tuning",
+        "description": "Pick the initial sample rate, center frequency and tuner gain. You can change these later from the device page.",
+        "data": {
+          "sample_rate": "Sample rate (MHz)",
+          "center_freq": "Center frequency (MHz)",
+          "gain": "Tuner gain"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to open an RTL-SDR device at this index. Make sure the dongle is plugged in and the RTL_433 / rtl-sdr add-on is installed.",
+      "already_configured": "This device is already configured."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "RTL-SDR tuning",
+        "data": {
+          "sample_rate": "Sample rate (MHz)",
+          "center_freq": "Center frequency (MHz)",
+          "gain": "Tuner gain"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "rssi": { "name": "Signal (RSSI)" },
+      "noise_floor": { "name": "Noise floor" },
+      "peak_freq": { "name": "Peak frequency" },
+      "peak_power": { "name": "Peak power" },
+      "tuner_type": { "name": "Tuner" },
+      "serial": { "name": "Serial" }
+    },
+    "binary_sensor": {
+      "connected": { "name": "Connected" },
+      "signal_detected": { "name": "Signal detected" }
+    },
+    "number": {
+      "frequency": { "name": "Frequency" },
+      "sample_rate": { "name": "Sample rate" },
+      "ppm": { "name": "Frequency correction" },
+      "bandwidth": { "name": "Bandwidth" },
+      "squelch": { "name": "Squelch" }
+    },
+    "select": {
+      "mode": { "name": "Mode" },
+      "gain": { "name": "Gain" }
+    },
+    "switch": {
+      "preamp": { "name": "Preamp" },
+      "reception": { "name": "Reception" }
+    },
+    "button": {
+      "reset": { "name": "Reset" },
+      "scan_fm": { "name": "Scan FM band" },
+      "scan_ism_433": { "name": "Scan ISM 433 MHz" },
+      "scan_ism_868": { "name": "Scan ISM 868 MHz" },
+      "scan_adsb": { "name": "Scan ADS-B 1090 MHz" }
+    },
+    "text": {
+      "set_frequency_text": { "name": "Set frequency (MHz)" }
+    }
+  }
+}

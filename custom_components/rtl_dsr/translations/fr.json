@@ -1,0 +1,98 @@
+{
+  "services": {
+    "get_fft": {
+      "name": "Récupérer le FFT",
+      "description": "Renvoie une mesure FFT (bins dB, pic, bruit, RSSI, réglages courants)."
+    },
+    "set_frequency": { "name": "Fixer la fréquence", "description": "Fréquence centrale en MHz (24–1766)." },
+    "set_sample_rate": { "name": "Fixer l'échantillonnage", "description": "Fréquence d'échantillonnage IQ en MHz (0.25–3.2)." },
+    "set_gain": { "name": "Fixer le gain", "description": "Gain du tuner : 'auto' ou une valeur en dB." },
+    "set_ppm": { "name": "Correction de fréquence", "description": "Correction du quartz en ppm." },
+    "set_mode": { "name": "Fixer le mode", "description": "Mode de démodulation : off, spectrum, nfm, wfm, am, usb, lsb, raw." },
+    "set_preamp": { "name": "Préampli", "description": "Active ou désactive le préampli RF." },
+    "set_bandwidth": { "name": "Bande passante", "description": "Bande passante IF en MHz (0 = auto)." },
+    "set_squelch": { "name": "Squelch", "description": "Seuil de détection de signal en dB." },
+    "reset": { "name": "Réinitialiser", "description": "Restaure les réglages par défaut et coupe la réception." }
+  },
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurer le dongle RTL-SDR",
+        "description": "Sélectionnez l'index du périphérique USB (0 pour le premier dongle). L'intégration va détecter le tuner automatiquement.",
+        "data": {
+          "device_index": "Index du périphérique"
+        },
+        "data_description": {
+          "device_index": "0 pour le premier dongle RTL-SDR, 1 pour le second, etc."
+        }
+      },
+      "options": {
+        "title": "Réglage initial",
+        "description": "Choisissez la fréquence d'échantillonnage, la fréquence centrale et le gain initial. Modifiables ensuite depuis la page de l'appareil.",
+        "data": {
+          "sample_rate": "Fréquence d'échantillonnage (MHz)",
+          "center_freq": "Fréquence centrale (MHz)",
+          "gain": "Gain du tuner"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible d'ouvrir un périphérique RTL-SDR à cet index. Vérifiez que la clé est branchée et que l'add-on RTL_433 / rtl-sdr est installé.",
+      "already_configured": "Ce périphérique est déjà configuré."
+    },
+    "abort": {
+      "already_configured": "Ce périphérique est déjà configuré."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Réglage RTL-SDR",
+        "data": {
+          "sample_rate": "Fréquence d'échantillonnage (MHz)",
+          "center_freq": "Fréquence centrale (MHz)",
+          "gain": "Gain du tuner"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "rssi": { "name": "Signal (RSSI)" },
+      "noise_floor": { "name": "Plancher de bruit" },
+      "peak_freq": { "name": "Fréquence du pic" },
+      "peak_power": { "name": "Puissance du pic" },
+      "tuner_type": { "name": "Tuner" },
+      "serial": { "name": "N° de série" }
+    },
+    "binary_sensor": {
+      "connected": { "name": "Connecté" },
+      "signal_detected": { "name": "Signal détecté" }
+    },
+    "number": {
+      "frequency": { "name": "Fréquence" },
+      "sample_rate": { "name": "Fréquence d'échantillonnage" },
+      "ppm": { "name": "Correction de fréquence" },
+      "bandwidth": { "name": "Bande passante" },
+      "squelch": { "name": "Squelch" }
+    },
+    "select": {
+      "mode": { "name": "Mode" },
+      "gain": { "name": "Gain" }
+    },
+    "switch": {
+      "preamp": { "name": "Préampli" },
+      "reception": { "name": "Réception" }
+    },
+    "button": {
+      "reset": { "name": "Réinitialiser" },
+      "scan_fm": { "name": "Scanner la bande FM" },
+      "scan_ism_433": { "name": "Scanner ISM 433 MHz" },
+      "scan_ism_868": { "name": "Scanner ISM 868 MHz" },
+      "scan_adsb": { "name": "Scanner ADS-B 1090 MHz" }
+    },
+    "text": {
+      "set_frequency_text": { "name": "Fixer la fréquence (MHz)" }
+    }
+  }
+}

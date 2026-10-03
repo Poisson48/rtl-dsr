@@ -1,0 +1,8 @@
+{
+  "cards": {
+    "sdr_plus_plus_card": {
+      "name": "SDR++ Card",
+      "description": "Spectrum, waterfall and tuning interface for an RTL-SDR dongle. Mobile & desktop friendly."
+    }
+  }
+}

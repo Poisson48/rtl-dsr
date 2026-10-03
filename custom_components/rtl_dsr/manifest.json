@@ -1,0 +1,12 @@
+{
+  "domain": "rtl_dsr",
+  "name": "RTL-SDR",
+  "codeowners": ["@your-github-username"],
+  "config_flow": true,
+  "documentation": "https://github.com/your-github-username/rtl-dsr",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/your-github-username/rtl-dsr/issues",
+  "requirements": ["pyrtlsdr>=0.3.0"],
+  "version": "0.2.0"
+}
