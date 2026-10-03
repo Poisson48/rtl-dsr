@@ -26,11 +26,7 @@ from .model import MockSdr, Sdr, SdrError
 
 
 def _try_open(index: int) -> tuple[bool, str, type[Sdr]]:
-    """Try to open ``index``.  Return ``(ok, tuner_type, class)``.
-
-    Falls back to :class:`MockSdr` when ``pyrtlsdr`` is not installed so
-    the integration is fully testable off-device.
-    """
+    """Try to open ``index``.  Return ``(ok, tuner_type, class)``."""
     try:
         sdr = Sdr(index)
         sdr.open()
@@ -42,7 +38,7 @@ def _try_open(index: int) -> tuple[bool, str, type[Sdr]]:
     except Exception:
         pass
 
-    # Fallback to the mock so config flow still works on a dev machine.
+    # Fallback to MockSdr for testing
     sdr = MockSdr(index)
     sdr.open()
     tuner = sdr.snapshot().tuner_type

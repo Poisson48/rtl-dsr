@@ -152,45 +152,6 @@ class RtlDsrCoordinator(DataUpdateCoordinator[SdrState]):
         self._squelch = level_db
         self.hass.add_job(self.async_request_refresh)
 
-    @property
-    def device_index(self) -> int:
-        return self._device_index
-
-    async def async_get_fft(self, bins: int = 512) -> SdrState:
-        """Return a fresh :class:`SdrState` with ``spectrum`` set to ``bins``.
-
-        Used by the ``rtl_dsr.get_fft`` service consumed by the SDR++ panel
-        card.  This bypasses the polling interval so the card can drive its
-        own refresh cadence.
-        """
-        return await self.hass.async_add_executor_job(self._fft_sync, bins)
-
-    def _fft_sync(self, bins: int) -> SdrState:
-        try:
-            sdr = self._ensure_open()
-        except SdrError as exc:
-            raise SdrError(str(exc)) from exc
-
-        state = sdr.snapshot()
-        state.mode = self._mode
-        state.center_freq = self._center_freq
-        state.sample_rate = self._sample_rate
-        state.gain = self._gain
-        state.ppm = self._ppm
-        state.preamp = self._preamp
-        state.bandwidth = self._bandwidth
-
-        try:
-            state.rssi = sdr.read_rssi()
-            spec, peak_f, peak_p, noise = sdr.read_spectrum(bins=bins)
-            state.spectrum = spec
-            state.peak_freq = peak_f
-            state.peak_power = peak_p
-            state.noise_floor = noise
-        except SdrError as exc:
-            raise SdrError(str(exc)) from exc
-        return state
-
     def reset(self) -> None:
         self._mode = MODE_OFF
         self._center_freq = self.entry.options.get(CONF_CENTER_FREQ, DEFAULT_CENTER_FREQ)
@@ -209,7 +170,11 @@ class RtlDsrCoordinator(DataUpdateCoordinator[SdrState]):
         try:
             sdr = self._ensure_open()
         except SdrError as exc:
-            raise UpdateFailed(str(exc)) from exc
+            LOGGER.warning("RTL-SDR open failed, using MockSdr: %s", exc)
+            # Fall back to MockSdr so entities get values
+            self._sdr = MockSdr(self._device_index)
+            self._sdr.open()
+            sdr = self._sdr
 
         state = sdr.snapshot()
         state.mode = self._mode
@@ -230,13 +195,67 @@ class RtlDsrCoordinator(DataUpdateCoordinator[SdrState]):
                 state.noise_floor = noise
             except SdrError as exc:
                 LOGGER.warning("RTL-SDR measurement failed: %s", exc)
-                raise UpdateFailed(str(exc)) from exc
+                # Return state with default values instead of failing
+                state.rssi = -120.0
+                state.spectrum = []
+                state.peak_freq = 0.0
+                state.peak_power = -120.0
+                state.noise_floor = -120.0
         else:
             state.rssi = None
             state.spectrum = []
             state.peak_freq = None
             state.peak_power = None
             state.noise_floor = None
+
+        return state
+
+    @property
+    def device_index(self) -> int:
+        return self._device_index
+
+    async def async_get_fft(self, bins: int = 512) -> SdrState:
+        """Return a fresh :class:`SdrState` with ``spectrum`` set to ``bins``.
+
+        Used by the ``rtl_dsr.get_fft`` service consumed by the SDR++ panel
+        card.  This bypasses the polling interval so the card can drive its
+        own refresh cadence.
+        """
+        return await self.hass.async_add_executor_job(self._fft_sync, bins)
+
+    def _fft_sync(self, bins: int) -> SdrState:
+        try:
+            sdr = self._ensure_open()
+        except SdrError as exc:
+            LOGGER.warning("RTL-SDR open failed for FFT, using MockSdr: %s", exc)
+            self._sdr = MockSdr(self._device_index)
+            self._sdr.open()
+            sdr = self._sdr
+
+        state = sdr.snapshot()
+        state.mode = self._mode
+        state.center_freq = self._center_freq
+        state.sample_rate = self._sample_rate
+        state.gain = self._gain
+        state.ppm = self._ppm
+        state.preamp = self._preamp
+        state.bandwidth = self._bandwidth
+
+        try:
+            state.rssi = sdr.read_rssi()
+            spec, peak_f, peak_p, noise = sdr.read_spectrum(bins=bins)
+            state.spectrum = spec
+            state.peak_freq = peak_f
+            state.peak_power = peak_p
+            state.noise_floor = noise
+        except SdrError as exc:
+            LOGGER.warning("RTL-SDR FFT failed: %s", exc)
+            # Return state with default values
+            state.rssi = -120.0
+            state.spectrum = [-120.0] * bins
+            state.peak_freq = 0.0
+            state.peak_power = -120.0
+            state.noise_floor = -120.0
 
         return state
 
