@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+# Script expect pour se connecter en SSH avec mot de passe
+# Usage: expect ssh_debug.exp "commande"
+
+set timeout 30
+set host "homeassistant.local"
+set port "22222"
+set user "leo"
+set password "1524XLH1524xlh"
+set command [lindex $argv 0]
+
+spawn ssh -p $port $user@$host $command
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
